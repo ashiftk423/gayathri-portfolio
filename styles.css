@@ -1411,7 +1411,7 @@ textarea::placeholder { color: rgba(244, 239, 230, 0.38); }
 .site-footer {
   background: var(--night);
   color: rgba(244, 239, 230, 0.66);
-  padding: 0 0 8.4rem;
+  padding: 0 0 6.4rem;
 }
 
 .footer-row {
@@ -1488,7 +1488,6 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 
 .sitter,
 .phone-pal,
-.lounger,
 .parade { pointer-events: none; }
 
 .sitter {
@@ -1507,50 +1506,28 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   z-index: 6;
 }
 
-.lounger {
-  position: absolute;
-  left: max(1.5rem, 4%);
-  bottom: 11rem;
-  width: min(220px, 36vw);
-  z-index: 1;
-}
-
 .parade {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 158px;
+  height: 96px;
   z-index: 35;
   overflow: hidden;
 }
 
-.walker {
+.pet {
   position: absolute;
   bottom: 0;
-  width: 96px;
   z-index: 2;
-  animation: stroll 18s linear infinite;
 }
 
-.walker.alt {
-  width: 90px;
-  animation-name: stroll-back;
-  animation-duration: 24s;
-  animation-delay: -8s;
-}
-
-.cat-walk {
-  width: 68px;
-  bottom: 4px;
-  z-index: 1;
-  animation-duration: 27s;
-  animation-delay: -15s;
-}
+.cat-walk { width: 78px; bottom: 2px; }
+.dog-walk { width: 104px; bottom: 0; }
+.bunny-hop { width: 62px; bottom: 4px; z-index: 1; }
 
 .sitter svg,
 .phone-pal svg,
-.lounger svg,
 .toon { display: block; width: 100%; height: auto; overflow: visible; }
 
 .toon-shadow { fill: #14161c; opacity: 0.16; }
@@ -1564,20 +1541,31 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 .arm-a { animation: stride 0.48s ease-in-out infinite reverse; }
 
 .cat-walk .limb,
-.cat-walk .toon-bob { animation-duration: 0.34s; }
+.cat-walk .toon-bob { animation-duration: 0.55s; }
+.dog-walk .limb,
+.dog-walk .toon-bob { animation-duration: 0.48s; }
+.cat-walk.is-run .limb { animation-duration: 0.16s; }
+.cat-walk.is-run .toon-bob { animation-name: toon-bob-run; animation-duration: 0.16s; }
+.dog-walk.is-run .limb,
+.dog-walk.is-run .toon-bob { animation-duration: 0.22s; }
+.bunny-hop.is-run .hop { animation-duration: 0.34s; }
 
 .tail {
   transform-box: fill-box;
-  transform-origin: 0% 80%;
-  animation: wag 0.5s ease-in-out infinite;
+  transform-origin: 100% 70%;
+  animation: wag 0.7s ease-in-out infinite;
 }
+.dog-walk .tail { transform-origin: 0% 70%; animation-duration: 0.55s; }
+.cat-walk.is-run .tail { animation-duration: 0.22s; }
+
+.hop { animation: hop 0.9s ease-in-out infinite; }
 
 .toon-eye {
   transform-box: fill-box;
   transform-origin: center;
   animation: blink 4.6s infinite;
 }
-.walker.alt .toon-eye { animation-delay: -1.4s; }
+.dog-walk .toon-eye { animation-delay: -1.4s; }
 .sitter .toon-eye,
 .phone-pal .toon-eye { animation-delay: -2.2s; }
 
@@ -1595,27 +1583,19 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 }
 .steam-b { animation-delay: -1s; }
 
-.kicks {
-  transform-box: fill-box;
-  transform-origin: 0% 60%;
-  animation: kick 1.5s ease-in-out infinite;
-}
-
-.flip { transform: scaleX(-1); }
-
-@keyframes stroll {
-  from { transform: translateX(-150px); }
-  to { transform: translateX(100vw); }
-}
-
-@keyframes stroll-back {
-  from { transform: translateX(100vw); }
-  to { transform: translateX(-170px); }
-}
-
 @keyframes toon-bob {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes toon-bob-run {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes hop {
+  0%, 100% { transform: translateY(0); }
+  42% { transform: translateY(-18px); }
 }
 
 @keyframes stride {
@@ -1642,22 +1622,17 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   to { transform: translateY(-9px); opacity: 0; }
 }
 
-@keyframes kick {
-  50% { transform: rotate(-10deg); }
-}
-
 @media (max-width: 980px) {
-  .phone-pal,
-  .lounger { display: none; }
+  .phone-pal { display: none; }
 }
 
 @media (max-width: 720px) {
-  .parade { height: 118px; }
-  .walker { width: 72px; }
-  .walker.alt { display: none; }
-  .cat-walk { width: 52px; display: block; }
+  .parade { height: 78px; }
+  .cat-walk { width: 60px; }
+  .dog-walk { width: 82px; }
+  .bunny-hop { width: 48px; }
   .sitter { width: 88px; top: -64px; }
-  .site-footer { padding-bottom: 6.6rem; }
+  .site-footer { padding-bottom: 5.2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

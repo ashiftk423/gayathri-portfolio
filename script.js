@@ -193,4 +193,36 @@
       requestAnimationFrame(follow);
     }
   }
+
+  if (!reduce) {
+    const herd = [
+      { el: document.querySelector(".cat-walk"), x: -80, dir: 1, pace: "walk", speed: 32, until: 0, runChance: 0.42, walk: [24, 20], run: [130, 45], walkFor: [3200, 3800], runFor: [1100, 900] },
+      { el: document.querySelector(".dog-walk"), x: Math.min(window.innerWidth * 0.7, 980), dir: -1, pace: "walk", speed: 26, until: 0, runChance: 0.28, walk: [20, 14], run: [68, 22], walkFor: [3800, 2800], runFor: [1300, 700] },
+      { el: document.querySelector(".bunny-hop"), x: Math.min(window.innerWidth * 0.28, 360), dir: 1, pace: "walk", speed: 16, until: 0, runChance: 0.34, walk: [12, 8], run: [46, 16], walkFor: [3600, 2400], runFor: [1400, 600] }
+    ].filter(function (pet) { return pet.el; });
+
+    let last = performance.now();
+    function roam(now) {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const span = window.innerWidth + 180;
+      herd.forEach(function (pet) {
+        if (now >= pet.until) {
+          const nextRun = pet.pace !== "run" && Math.random() < pet.runChance;
+          pet.pace = nextRun ? "run" : "walk";
+          const band = pet.pace === "run" ? pet.run : pet.walk;
+          const hold = pet.pace === "run" ? pet.runFor : pet.walkFor;
+          pet.speed = band[0] + Math.random() * band[1];
+          pet.until = now + hold[0] + Math.random() * hold[1];
+          pet.el.classList.toggle("is-run", pet.pace === "run");
+        }
+        pet.x += pet.dir * pet.speed * dt;
+        if (pet.dir > 0 && pet.x > span) pet.x = -150;
+        if (pet.dir < 0 && pet.x < -150) pet.x = span;
+        pet.el.style.transform = "translate3d(" + pet.x + "px, 0, 0)";
+      });
+      requestAnimationFrame(roam);
+    }
+    if (herd.length) requestAnimationFrame(roam);
+  }
 })();
