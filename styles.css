@@ -1484,8 +1484,23 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   .role, .skill-row { grid-template-columns: 1fr; gap: 0.45rem; }
   .work-top { grid-template-columns: auto minmax(0, 1fr); }
   .work-stack { grid-column: 2; }
-  .device { width: min(300px, 100%); }
-  .device-screen { height: 540px; }
+  .work-item { padding: 0.85rem 0.55rem; gap: 0.35rem; }
+  .work-name { font-size: 1.45rem; }
+  .work-desc { font-size: 0.94rem; }
+  .work-layout { gap: 1.15rem; }
+
+  .work-phone { display: flex; flex-direction: column; align-items: center; }
+  .device-parallax {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .device-float { zoom: 0.72; }
+  .device { width: 300px; }
+  .device-screen { height: 580px; }
+  .device-caption { width: 300px; margin-top: 0.7rem; }
+  .device-caption em { font-size: 1.2rem; }
   .contact-links a { grid-template-columns: minmax(0, 1fr) auto; }
   .contact-links span { grid-column: 1 / -1; }
   .now-card li { grid-template-columns: 78px 1fr; }
@@ -1625,11 +1640,9 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 }
 
 @media (max-width: 720px) {
-  .parade { height: 78px; }
-  .cat-walk { width: 60px; }
-  .dog-walk { width: 82px; }
+  .parade { display: none; }
   .sitter { width: 88px; top: -64px; }
-  .site-footer { padding-bottom: 5.2rem; }
+  .site-footer { padding-bottom: 1.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
