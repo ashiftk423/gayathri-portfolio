@@ -1524,7 +1524,6 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 
 .cat-walk { width: 78px; bottom: 2px; }
 .dog-walk { width: 104px; bottom: 0; }
-.bunny-hop { width: 62px; bottom: 4px; z-index: 1; }
 
 .sitter svg,
 .phone-pal svg,
@@ -1548,7 +1547,6 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 .cat-walk.is-run .toon-bob { animation-name: toon-bob-run; animation-duration: 0.16s; }
 .dog-walk.is-run .limb,
 .dog-walk.is-run .toon-bob { animation-duration: 0.22s; }
-.bunny-hop.is-run .hop { animation-duration: 0.34s; }
 
 .tail {
   transform-box: fill-box;
@@ -1557,8 +1555,6 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 }
 .dog-walk .tail { transform-origin: 0% 70%; animation-duration: 0.55s; }
 .cat-walk.is-run .tail { animation-duration: 0.22s; }
-
-.hop { animation: hop 0.9s ease-in-out infinite; }
 
 .toon-eye {
   transform-box: fill-box;
@@ -1593,11 +1589,6 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   50% { transform: translateY(-6px); }
 }
 
-@keyframes hop {
-  0%, 100% { transform: translateY(0); }
-  42% { transform: translateY(-18px); }
-}
-
 @keyframes stride {
   0%, 100% { transform: rotate(22deg); }
   50% { transform: rotate(-22deg); }
@@ -1622,6 +1613,132 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   to { transform: translateY(-9px); opacity: 0; }
 }
 
+/* Quiet pranks — a hairline in the glass, then a lifted edge */
+
+.glass,
+.seam { pointer-events: none; }
+
+.glass {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.glass.is-live { opacity: 1; }
+.glass.is-gone { opacity: 0; transition: opacity 0.55s ease; }
+
+.glass-sheet {
+  position: absolute;
+  top: 76px;
+  right: 0;
+  width: min(380px, 34vw);
+}
+
+.glass-sheet.is-flip .glass-svg { transform: scaleX(-1); }
+.glass-sheet.is-flip .glass-line { left: auto; right: 2%; }
+.glass-sheet.is-flip .shard { left: auto; right: 16%; }
+
+.glass-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.veins path {
+  fill: none;
+  stroke-width: 1.35;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+}
+
+.veins-dark { stroke: rgba(20, 22, 28, 0.88); }
+.veins-light { stroke: rgba(255, 253, 248, 0.96); transform: translate(1px, 1px); }
+
+.glass-line {
+  position: absolute;
+  left: 2%;
+  top: 82%;
+  margin: 0;
+  padding: 1px 7px 2px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(20, 22, 28, 0.14);
+}
+
+.glass.is-said .glass-line {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s ease, transform 0.45s var(--ease);
+}
+
+.shard {
+  position: absolute;
+  left: 16%;
+  top: 78%;
+  width: 2px;
+  height: 2px;
+  background: var(--ink);
+  opacity: 0;
+}
+
+.glass.is-said .shard { animation: shard 1.15s ease-in forwards; }
+
+@keyframes shard {
+  0% { opacity: 0.85; transform: translate(0, 0); }
+  100% { opacity: 0; transform: translate(-4px, 34px); }
+}
+
+.seam {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 36;
+  width: 150px;
+  height: 78px;
+  margin-left: -75px;
+  transform: translateY(110%);
+}
+
+.seam svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(5px 3px 7px rgba(20, 22, 28, 0.16));
+}
+
+.seam p {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38px;
+  margin: 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.seam.is-open { animation: seam-peek 3.1s var(--ease) forwards; }
+
+@keyframes seam-peek {
+  0% { transform: translateY(110%); }
+  18% { transform: translateY(0); }
+  68% { transform: translateY(0); }
+  100% { transform: translateY(110%); }
+}
+
 @media (max-width: 980px) {
   .phone-pal { display: none; }
 }
@@ -1630,7 +1747,10 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   .parade { height: 78px; }
   .cat-walk { width: 60px; }
   .dog-walk { width: 82px; }
-  .bunny-hop { width: 48px; }
+  .glass-sheet { width: min(220px, 58vw); top: 64px; }
+  .glass-line { font-size: 13px; }
+  .seam { width: 132px; height: 68px; margin-left: -66px; }
+  .seam p { top: 32px; font-size: 13px; }
   .sitter { width: 88px; top: -64px; }
   .site-footer { padding-bottom: 5.2rem; }
 }
@@ -1654,7 +1774,9 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 
   .timeline::before { transform: none; }
   .cursor { display: none; }
-  .parade { display: none; }
+  .parade,
+  .glass,
+  .seam { display: none; }
 }
 
 @media (pointer: coarse) {
