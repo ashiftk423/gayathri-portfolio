@@ -227,18 +227,12 @@
 
   if (!reduce) {
     const glass = document.querySelector(".glass");
-    const seam = document.querySelector(".seam");
-    if (glass && seam) {
+    if (glass) {
       const lines = ["just the glass.", "it heals.", "only the light."];
-      const asides = ["you stayed.", "still here."];
       const begun = performance.now();
       let crackPlayed = false;
-      let seamPlayed = false;
-      let seamArmed = false;
-      let armY = 0;
 
       glass.querySelector(".glass-line").textContent = lines[Math.floor(Math.random() * lines.length)];
-      seam.querySelector("p").textContent = asides[Math.floor(Math.random() * asides.length)];
 
       const veins = glass.querySelectorAll(".veins path");
       veins.forEach(function (path) {
@@ -253,7 +247,7 @@
         const pad = 10;
         const nodes = document.querySelectorAll("a, button, textarea, h1, h2, h3, p");
         for (let i = 0; i < nodes.length; i++) {
-          if (glass.contains(nodes[i]) || seam.contains(nodes[i])) continue;
+          if (glass.contains(nodes[i])) continue;
           const b = nodes[i].getBoundingClientRect();
           if (b.width < 2 || b.height < 2) continue;
           if (r.left < b.right + pad && r.right > b.left - pad && r.top < b.bottom + pad && r.bottom > b.top - pad) return true;
@@ -296,14 +290,7 @@
         window.setTimeout(function () { glass.classList.add("is-said"); }, 460);
         window.setTimeout(function () {
           glass.classList.add("is-gone");
-          seamArmed = true;
-          armY = window.scrollY;
-          window.setTimeout(function () {
-            if (!seamPlayed) {
-              seamPlayed = true;
-              seam.classList.add("is-open");
-            }
-          }, 6500 + Math.random() * 3500);
+          window.clearInterval(watch);
         }, 2200);
       }
 
@@ -313,11 +300,6 @@
           crackPlayed = true;
           window.setTimeout(playCrack, 400 + Math.random() * 1200);
         }
-        if (seamArmed && !seamPlayed && Math.abs(y - armY) > 320) {
-          seamPlayed = true;
-          window.setTimeout(function () { seam.classList.add("is-open"); }, 350 + Math.random() * 700);
-        }
-        if (crackPlayed && seamPlayed) window.clearInterval(watch);
       }
 
       const watch = window.setInterval(watchExplore, 700);
