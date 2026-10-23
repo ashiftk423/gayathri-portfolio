@@ -507,6 +507,7 @@ html.js.is-ready .hero-copy > *:nth-child(6) { animation-delay: 0.32s; }
 .facts dd { margin: 0.28rem 0 0; }
 
 .hero-board {
+  position: relative;
   background: var(--night);
   color: var(--paper);
   border-radius: 28px;
@@ -1410,7 +1411,7 @@ textarea::placeholder { color: rgba(244, 239, 230, 0.38); }
 .site-footer {
   background: var(--night);
   color: rgba(244, 239, 230, 0.66);
-  padding: 0 0 1.4rem;
+  padding: 0 0 8.4rem;
 }
 
 .footer-row {
@@ -1483,6 +1484,182 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
   .now-card li { grid-template-columns: 78px 1fr; }
 }
 
+/* Cartoon cast */
+
+.sitter,
+.phone-pal,
+.lounger,
+.parade { pointer-events: none; }
+
+.sitter {
+  position: absolute;
+  top: -82px;
+  right: 8px;
+  width: 112px;
+  z-index: 2;
+}
+
+.phone-pal {
+  position: absolute;
+  right: -72px;
+  bottom: 72px;
+  width: 104px;
+  z-index: 6;
+}
+
+.lounger {
+  position: absolute;
+  left: max(1.5rem, 4%);
+  bottom: 11rem;
+  width: min(220px, 36vw);
+  z-index: 1;
+}
+
+.parade {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 158px;
+  z-index: 35;
+  overflow: hidden;
+}
+
+.walker {
+  position: absolute;
+  bottom: 0;
+  width: 96px;
+  z-index: 2;
+  animation: stroll 18s linear infinite;
+}
+
+.walker.alt {
+  width: 90px;
+  animation-name: stroll-back;
+  animation-duration: 24s;
+  animation-delay: -8s;
+}
+
+.cat-walk {
+  width: 68px;
+  bottom: 4px;
+  z-index: 1;
+  animation-duration: 27s;
+  animation-delay: -15s;
+}
+
+.sitter svg,
+.phone-pal svg,
+.lounger svg,
+.toon { display: block; width: 100%; height: auto; overflow: visible; }
+
+.toon-shadow { fill: #14161c; opacity: 0.16; }
+
+.toon-bob { animation: toon-bob 0.48s ease-in-out infinite; }
+
+.limb { transform-box: fill-box; transform-origin: 50% 0%; }
+.leg-a,
+.arm-b { animation: stride 0.48s ease-in-out infinite; }
+.leg-b,
+.arm-a { animation: stride 0.48s ease-in-out infinite reverse; }
+
+.cat-walk .limb,
+.cat-walk .toon-bob { animation-duration: 0.34s; }
+
+.tail {
+  transform-box: fill-box;
+  transform-origin: 0% 80%;
+  animation: wag 0.5s ease-in-out infinite;
+}
+
+.toon-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.6s infinite;
+}
+.walker.alt .toon-eye { animation-delay: -1.4s; }
+.sitter .toon-eye,
+.phone-pal .toon-eye { animation-delay: -2.2s; }
+
+.toon-sway {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+  animation: sway 3.6s ease-in-out infinite;
+}
+
+.steam {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: puff 2.1s ease-out infinite;
+  stroke: #c5ccd6;
+}
+.steam-b { animation-delay: -1s; }
+
+.kicks {
+  transform-box: fill-box;
+  transform-origin: 0% 60%;
+  animation: kick 1.5s ease-in-out infinite;
+}
+
+.flip { transform: scaleX(-1); }
+
+@keyframes stroll {
+  from { transform: translateX(-150px); }
+  to { transform: translateX(100vw); }
+}
+
+@keyframes stroll-back {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-170px); }
+}
+
+@keyframes toon-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes stride {
+  0%, 100% { transform: rotate(22deg); }
+  50% { transform: rotate(-22deg); }
+}
+
+@keyframes wag {
+  50% { transform: rotate(18deg); }
+}
+
+@keyframes blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  93% { transform: scaleY(0.1); }
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+@keyframes puff {
+  from { transform: translateY(0); opacity: 0.9; }
+  to { transform: translateY(-9px); opacity: 0; }
+}
+
+@keyframes kick {
+  50% { transform: rotate(-10deg); }
+}
+
+@media (max-width: 980px) {
+  .phone-pal,
+  .lounger { display: none; }
+}
+
+@media (max-width: 720px) {
+  .parade { height: 118px; }
+  .walker { width: 72px; }
+  .walker.alt { display: none; }
+  .cat-walk { width: 52px; display: block; }
+  .sitter { width: 88px; top: -64px; }
+  .site-footer { padding-bottom: 6.6rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -1502,6 +1679,7 @@ html.js [data-delay="2"] { transition-delay: 0.22s; }
 
   .timeline::before { transform: none; }
   .cursor { display: none; }
+  .parade { display: none; }
 }
 
 @media (pointer: coarse) {
