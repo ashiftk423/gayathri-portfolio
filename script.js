@@ -94,15 +94,28 @@
     });
   }
 
+  let holdScreen = false;
+
   items.forEach(function (item) {
     function activate() { showScreen(item.dataset.screen); }
-    item.addEventListener("mouseenter", activate);
-    item.addEventListener("focus", activate);
+    item.addEventListener("pointerenter", function (event) {
+      if (event.pointerType === "touch") return;
+      holdScreen = true;
+      activate();
+    });
+    item.addEventListener("focus", function () {
+      holdScreen = true;
+      activate();
+    });
     item.addEventListener("click", activate);
   });
 
   const workList = document.querySelector(".work-list");
   if (workList) {
+    workList.addEventListener("pointerleave", function () { holdScreen = false; });
+    workList.addEventListener("focusout", function (event) {
+      if (!workList.contains(event.relatedTarget)) holdScreen = false;
+    });
     workList.addEventListener("keydown", function (event) {
       if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
       const index = items.indexOf(document.activeElement);
@@ -111,6 +124,15 @@
       const next = items[index + (event.key === "ArrowDown" ? 1 : -1)];
       if (next) next.focus();
     });
+  }
+
+  if (!reduce && items.length > 1) {
+    window.setInterval(function () {
+      if (holdScreen) return;
+      const current = items.findIndex(function (item) { return item.classList.contains("is-active"); });
+      const next = items[(current + 1) % items.length];
+      showScreen(next.dataset.screen);
+    }, 4200);
   }
 
   const menu = document.getElementById("menu");
